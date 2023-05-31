@@ -61,12 +61,14 @@ grassNormalTexture.wrapT = THREE.RepeatWrapping;
 grassRoughnessTexture.wrapT = THREE.RepeatWrapping;
 
 // bush textures
-const bushColorTexture = textureLoader.load('/textures/bushes/azalea_leaves_bushy_1.png')
-bushColorTexture.repeat.set(16, 16);
-bushColorTexture.wrapS = THREE.RepeatWrapping;
-bushColorTexture.wrapT = THREE.RepeatWrapping;
-
-const BushbranchColorTexture = textureLoader.load('/textures/bushes/azalea_branch.png') 
+const bushColorTexture = textureLoader.load('/textures/bushes/Ground_Forest_002_baseColor.jpg')
+const bushAmbientOcclusionTexture = textureLoader.load('/textures/bushes/Ground_Forest_002_ambientOcclusion.jpg')
+const bushNormalTexture = textureLoader.load('/textures/bushes/Ground_Forest_002_normal.jpg')
+const bushRoughnessTexture = textureLoader.load('/textures/bushes/Ground_Forest_002_roughness.jpg')
+const bushHeightTexture = textureLoader.load('/textures/bushes/Ground_Forest_002_height.png')
+// bushColorTexture.repeat.set(16, 16);
+// bushColorTexture.wrapS = THREE.RepeatWrapping;
+// bushColorTexture.wrapT = THREE.RepeatWrapping;
 
 // grave textures
 
@@ -133,12 +135,15 @@ house.add(door)
 
 const bushGeometry = new THREE.SphereGeometry(1, 16, 16)
 const bushMaterial = new THREE.MeshStandardMaterial({
-    map: bushColorTexture,
-    displacementMap: BushbranchColorTexture,
+    map: bushColorTexture, // color texture
+    aoMap: bushAmbientOcclusionTexture, // ambient occlusion texture (darken the corners)
+    normalMap: bushNormalTexture, // normal texture (add some details)
+    roughnessMap: bushRoughnessTexture, // roughness texture (add some roughness)
+    displacementMap: bushHeightTexture, // displacement texture (add some depth) for the bush to be not flat
     displacementScale: 0.1, // scale of the displacement
-
-    
 })
+
+bushGeometry.setAttribute('uv2', new THREE.Float32BufferAttribute(bushGeometry.attributes.uv.array, 2)) // add uv2 to the bush geometry
 
 const bush1 = new THREE.Mesh(bushGeometry, bushMaterial)
 bush1.scale.set(0.5, 0.5, 0.5)
@@ -172,6 +177,7 @@ const graveMaterial = new THREE.MeshStandardMaterial({
     displacementMap: graveHeightTexture,
     displacementScale: 0.01,
 });
+graveGeometry.setAttribute('uv2', new THREE.Float32BufferAttribute(graveGeometry.attributes.uv.array, 2)) // add uv2 to the grave geometry
 
 for (let i = 0; i < 50; i++) {
     const angle = Math.random() * Math.PI * 2; // random angle between 0 and 2PI
