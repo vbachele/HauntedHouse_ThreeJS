@@ -332,10 +332,25 @@ ghost3.shadow.camera.far = 7
  * Animate
  */
 const clock = new THREE.Clock()
+let isDoorLightSpookey = true
 
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    // animate the door light
+    const doorLightBlinkDelay = Math.floor((Math.random() + 0.8) * 3)
+    const doorLightBlinkTimer = Math.floor(elapsedTime) % doorLightBlinkDelay === 0
+    console.log(doorLightBlinkDelay, doorLightBlinkTimer);
+    if (doorLightBlinkTimer && isDoorLightSpookey){
+        doorLight.distance = (Math.random()) * 10
+    }
+    // if (isDoorLightSpookey) {
+    //     doorLight.intensity = Math.sin(elapsedTime * 2) * 2 + 2 // 2 is the base intensity of the door light
+    // } else {
+    //     doorLight.intensity = 0
+    // }
+
 
     // Update Ghosts
 
