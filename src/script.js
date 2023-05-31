@@ -78,6 +78,29 @@ const graveNormalTexture = textureLoader.load('/textures/graves/Rock_047_Normal.
 const graveRoughnessTexture = textureLoader.load('/textures/graves/Rock_047_Roughness.jpg')
 const graveHeightTexture = textureLoader.load('/textures/graves/Rock_047_Height.png')
 
+// roof textures
+
+const roofColorTexture = textureLoader.load('/textures/roof/Rock_045_BaseColor.jpg')
+const roofAmbientOcclusionTexture = textureLoader.load('/textures/roof/Rock_045_AmbientOcclusion.jpg')
+const roofNormalTexture = textureLoader.load('/textures/roof/Rock_045_Normal.jpg')
+const roofRoughnessTexture = textureLoader.load('/textures/roof/Rock_045_Roughness.jpg')
+const roofHeightTexture = textureLoader.load('/textures/roof/Rock_045_Height.png')
+
+roofColorTexture.repeat.set(8, 8);
+roofAmbientOcclusionTexture.repeat.set(8, 8);
+roofNormalTexture.repeat.set(8, 8);
+roofRoughnessTexture.repeat.set(8, 8);
+roofColorTexture.wrapS = THREE.RepeatWrapping;
+roofAmbientOcclusionTexture.wrapS = THREE.RepeatWrapping;
+roofNormalTexture.wrapS = THREE.RepeatWrapping;
+roofRoughnessTexture.wrapS = THREE.RepeatWrapping;
+roofColorTexture.wrapT = THREE.RepeatWrapping;
+roofAmbientOcclusionTexture.wrapT = THREE.RepeatWrapping;
+roofNormalTexture.wrapT = THREE.RepeatWrapping;
+roofRoughnessTexture.wrapT = THREE.RepeatWrapping;
+
+
+
 
 /**
  * House
@@ -105,11 +128,21 @@ house.add(walls)
 
 const roof = new THREE.Mesh(
     new THREE.ConeGeometry(3.5, 1, 4),
-    new THREE.MeshStandardMaterial({ color: '#b35f45' }),
+    new THREE.MeshStandardMaterial({
+        map: roofColorTexture, // color texture
+        aoMap: roofAmbientOcclusionTexture, // ambient occlusion texture (darken the corners)
+        normalMap: roofNormalTexture, // normal texture (add some details)
+        roughnessMap: roofRoughnessTexture, // roughness texture (add some roughness)
+        displacementMap: roofHeightTexture, // displacement texture (add some depth) for the roof to be not flat
+        displacementScale: 0.001, // scale of the displacement
+     }),
 )
-roof.position.y = 1.25 + 0.5// 2.5 (walls height) + 0.5 (roof height) = 3
+roof.geometry.setAttribute('uv2', new THREE.Float32BufferAttribute(roof.geometry.attributes.uv.array, 2)) // add uv2 to the roof geometry
+//round edges of the roof
+
+roof.position.y = 2.5 + 0.5// 2.5 (walls height) + 0.5 (roof height) = 3
 roof.rotation.y = Math.PI * 0.25
-walls.add(roof)
+house.add(roof)
 
 //door
 const door = new THREE.Mesh(
@@ -140,7 +173,7 @@ const bushMaterial = new THREE.MeshStandardMaterial({
     normalMap: bushNormalTexture, // normal texture (add some details)
     roughnessMap: bushRoughnessTexture, // roughness texture (add some roughness)
     displacementMap: bushHeightTexture, // displacement texture (add some depth) for the bush to be not flat
-    displacementScale: 0.1, // scale of the displacement
+    displacementScale: 0.01, // scale of the displacement
 })
 
 bushGeometry.setAttribute('uv2', new THREE.Float32BufferAttribute(bushGeometry.attributes.uv.array, 2)) // add uv2 to the bush geometry
@@ -341,16 +374,9 @@ const tick = () =>
     // animate the door light
     const doorLightBlinkDelay = Math.floor((Math.random() + 0.8) * 3)
     const doorLightBlinkTimer = Math.floor(elapsedTime) % doorLightBlinkDelay === 0
-    console.log(doorLightBlinkDelay, doorLightBlinkTimer);
     if (doorLightBlinkTimer && isDoorLightSpookey){
         doorLight.distance = (Math.random()) * 10
     }
-    // if (isDoorLightSpookey) {
-    //     doorLight.intensity = Math.sin(elapsedTime * 2) * 2 + 2 // 2 is the base intensity of the door light
-    // } else {
-    //     doorLight.intensity = 0
-    // }
-
 
     // Update Ghosts
 
