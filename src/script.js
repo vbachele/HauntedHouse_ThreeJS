@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js'
+import thunderAudio from "/sound/thunder.mp3"
 
 /**
  * Base
@@ -18,6 +20,7 @@ const scene = new THREE.Scene()
 //Fog
 const Fog = new THREE.Fog('#262837', 1, 15)
 scene.fog = Fog
+
 
 
 /**
@@ -66,9 +69,6 @@ const bushAmbientOcclusionTexture = textureLoader.load('/textures/bushes/Ground_
 const bushNormalTexture = textureLoader.load('/textures/bushes/Ground_Forest_002_normal.jpg')
 const bushRoughnessTexture = textureLoader.load('/textures/bushes/Ground_Forest_002_roughness.jpg')
 const bushHeightTexture = textureLoader.load('/textures/bushes/Ground_Forest_002_height.png')
-// bushColorTexture.repeat.set(16, 16);
-// bushColorTexture.wrapS = THREE.RepeatWrapping;
-// bushColorTexture.wrapT = THREE.RepeatWrapping;
 
 // grave textures
 
@@ -99,8 +99,12 @@ roofAmbientOcclusionTexture.wrapT = THREE.RepeatWrapping;
 roofNormalTexture.wrapT = THREE.RepeatWrapping;
 roofRoughnessTexture.wrapT = THREE.RepeatWrapping;
 
+// sky textures
 
-
+const skyColorTexture = textureLoader.load('/textures/sky/sky3.png')
+skyColorTexture.wrapS = THREE.RepeatWrapping;
+skyColorTexture.wrapT = THREE.RepeatWrapping;
+skyColorTexture.repeat.set(32, 32);
 
 /**
  * House
@@ -244,16 +248,120 @@ floor.rotation.x = - Math.PI * 0.5
 floor.position.y = 0
 scene.add(floor)
 
+// lightning strikes --- RAY LIGHTNING
+const rayLightParameters = { 
+    sourceoffset: new THREE.Vector3(0, -6, -150), // When ray starts
+    destOffset: new THREE.Vector3(0, -5, -150), // When ray ends
+
+    radius0: 1, // Radius main trunk at the start
+    radius1: 0.1, // Radius main trunk at the end
+    radius0factor: 0.5, // Radius of a subray;  = this factor * radius0 parent (Radius multiplier for the first subray)
+    radius1factor: 0.2, // Radius multiplier for the second subray
+    minRadius: 2, // Minimum radiusthat radius0 and radius1 can get
+    maxIterations: 10, // Maximum number of iterations of rays ligtning
+
+    isEternal: false, // If true, the ray will never disappear
+    birthTime: 0.2, // Time at which the ray is created
+    deathTime: 2, // Time at which the ray disappears
+    timeScale: 0.7, // Speed of the ray
+    propagationTimeFactor: 0.05, // Speed of the ray
+    vanishingTimeFactor: 0.95, // lifetime factor at which ray ends the steady phase
+    subrayPeriod: 1, // Time between subrays
+    subrayDutyCycle: 0.6, // Percentage of time that the ray is active
+    maxSubrayRecursion: 3, // Maximum number of subrays
+    ramification: 7, // Number of subrays (children) per ray (parent)
+    recursionProbability: 1, // Probability of a ray to generate a subray
+    roughness: 0.85, // Roughness of the ray
+    straightness: 0.65, // Straightness of the ray
+}
+
+// lightning strikes --- Mesh LIGHTNING
+
+
+const lightningStrike = new LightningStrike(rayLightParameters)
+const lightningStrikeMaterial = new THREE.MeshBasicMaterial({ color: 0xB0FFFF })
+lightningStrikeMaterial.fog = false;
+lightningStrikeMaterial.blending = THREE.AdditiveBlending;
+
+const lightningStrikeMesh1 = new THREE.Mesh(lightningStrike, lightningStrikeMaterial)
+lightningStrikeMesh1.position.set(30, 0, -30);
+lightningStrikeMesh1.scale.set(0.1, 0.15, 0.1);
+
+const lightningStrikeMesh2 = new THREE.Mesh(lightningStrike, lightningStrikeMaterial)
+lightningStrikeMesh2.position.set(-10, 0, -50);
+lightningStrikeMesh2.scale.set(0.1, 0.15, 0.1);
+
+const lightningStrikeMesh3 = new THREE.Mesh(lightningStrike, lightningStrikeMaterial)
+lightningStrikeMesh3.position.set(-20, 0, 20);
+lightningStrikeMesh3.scale.set(0.1, 0.15, 0.1);
+
+const lightningStrikeMesh4 = new THREE.Mesh(lightningStrike, lightningStrikeMaterial)
+lightningStrikeMesh4.position.set(50, 0, 20);
+lightningStrikeMesh4.scale.set(0.1, 0.15, 0.1);
+
+scene.add(lightningStrikeMesh1, lightningStrikeMesh2, lightningStrikeMesh3, lightningStrikeMesh4);
+
+// skyParticles
+let cloudParticles = [];
+
+// SkyCloud
+
+const skyGeometry = new THREE.PlaneGeometry( Math.random() * 500,  Math.random() *500);
+const skyMaterial = new THREE.MeshLambertMaterial({ 
+    map: skyColorTexture,
+    transparent: true,
+});
+skyMaterial.fog = false;
+
+for (let i = 0; i < 25; i++) { // create meshes and position randomly
+    let cloud = new THREE.Mesh(skyGeometry, skyMaterial);
+    cloud.position.set(
+        Math.random() * 300 + 10,
+        100,
+        Math.random() * 101 - 200,
+    );
+    cloud.scale.set(1.5, 1.5, 1.5);
+    cloud.rotation.x = 1.16;
+    cloud.rotation.y = - 0.12;
+    // cloud.rotation.z = Math.random();
+    cloud.material.opacity = 0.6;
+    cloudParticles.push(cloud);
+    scene.add(cloud);
+}
+
+// rainParticles
+
+// let rainCount = 1500;
+
+// let rainGeometry = new THREE.BufferGeometry();
+// for (let i = 0; i < rainCount; i++) {
+//     let rainDrop = new THREE.Vector3(
+//         Math.random() * 400 - 200,
+//         Math.random() * 500 - 250,
+//         Math.random() * 400 - 200,
+//     );
+//     rainGeometry.Buffer.push(rainDrop);
+// }
+// const rainMaterial = new THREE.PointsMaterial({
+//     color: 0xaaaaaa,
+//     transparent: true,
+//     size: 0.1,
+// });
+// const rainMeshParticles = new THREE.Points(rainGeometry, rainMaterial);
+// scene.add(rainMeshParticles);
+
+
+
 /**
  * Lights
  */
 // Ambient light
-const ambientLight = new THREE.AmbientLight('#b9d5ff', 0.12)
+const ambientLight = new THREE.AmbientLight('#94979A', 0.12)
 gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 scene.add(ambientLight)
 
 // Directional light
-const moonLight = new THREE.DirectionalLight('#b9d5ff', 0.12)
+const moonLight = new THREE.DirectionalLight('#94979A', 0.12)
 moonLight.position.set(4, 5, - 2)
 gui.add(moonLight, 'intensity').min(0).max(1).step(0.001)
 gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001)
@@ -276,6 +384,11 @@ scene.add(ghost2)
 const ghost3 = new THREE.PointLight('#ffff00', 2, 3)
 scene.add(ghost3)
 
+// flashing light
+
+const flash = new THREE.PointLight(0x062d89, 30, 500, 1.7);
+flash.position.set(30, 99, -30);
+scene.add(flash);
 /**
  * Sizes
  */
@@ -309,6 +422,24 @@ camera.position.y = 2
 camera.position.z = 5
 scene.add(camera)
 
+
+/**
+ * Sounds
+ */
+
+const listener = new THREE.AudioListener();
+camera.add(listener);
+
+const thunder = new THREE.Audio(listener);
+
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load(thunderAudio, function (buffer) {
+    thunder.setBuffer(buffer);
+    thunder.setLoop(false);
+    thunder.setVolume(0.5);
+    thunder.play();
+});
+scene.add(thunder);
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
@@ -364,12 +495,41 @@ ghost3.shadow.camera.far = 7
 /**
  * Animate
  */
+
 const clock = new THREE.Clock()
 let isDoorLightSpookey = true
+let ActiveLightningStrike = false;
 
 const tick = () =>
 {
-    const elapsedTime = clock.getElapsedTime()
+    const elapsedTime = clock.getElapsedTime();
+
+    // cloud particles 
+
+    // cloudParticles.forEach(p => {
+    //     p.rotation.z = 0.001;
+    // });
+    // lightning strikes
+    lightningStrike.update(elapsedTime * 0.1);
+    if (elapsedTime > 2 && elapsedTime < 12) {
+    if (Math.random() > 0.93 || flash.power > 100 || elapsedTime < 5) {
+        if (flash.power < 100) {
+                flash.position.set(
+                    Math.random() * -30,
+                    98 + Math.random(),
+                    Math.random() * 30
+                );
+            }
+            flash.power = 50 + Math.random() * 500;
+        }
+    } else {
+        flash.power = 0;
+    }
+    if (elapsedTime > 12) {
+        scene.remove(lightningStrikeMesh1, lightningStrikeMesh2, lightningStrikeMesh3);
+
+    }
+
 
     // animate the door light
     const doorLightBlinkDelay = Math.floor((Math.random() + 0.8) * 3)
