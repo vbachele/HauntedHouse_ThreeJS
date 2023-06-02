@@ -437,7 +437,7 @@ audioLoader.load(thunderAudio, function (buffer) {
     thunder.setBuffer(buffer);
     thunder.setLoop(false);
     thunder.setVolume(0.5);
-    thunder.play();
+    thunder.play(0);
 });
 scene.add(thunder);
 // Controls
