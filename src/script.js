@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
 import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js'
 import thunderAudio from "/sound/thunder.mp3"
+import rainAudio from "/sound/rain.mp3"
 
 /**
  * Base
@@ -331,24 +332,29 @@ for (let i = 0; i < 25; i++) { // create meshes and position randomly
 
 // rainParticles
 
-// let rainCount = 1500;
+let rainCount = 1000;
 
-// let rainGeometry = new THREE.BufferGeometry();
-// for (let i = 0; i < rainCount; i++) {
-//     let rainDrop = new THREE.Vector3(
-//         Math.random() * 400 - 200,
-//         Math.random() * 500 - 250,
-//         Math.random() * 400 - 200,
-//     );
-//     rainGeometry.Buffer.push(rainDrop);
-// }
-// const rainMaterial = new THREE.PointsMaterial({
-//     color: 0xaaaaaa,
-//     transparent: true,
-//     size: 0.1,
-// });
-// const rainMeshParticles = new THREE.Points(rainGeometry, rainMaterial);
-// scene.add(rainMeshParticles);
+let rainGeometry = new THREE.BufferGeometry();
+const vertices = [];
+for (let i = 0; i < rainCount; i++) {
+    let rainDrop = new THREE.Vector3(
+        Math.random() * 400 - 200,
+        Math.random() * 500 - 250,
+        Math.random() * 400 - 200,
+    );
+    vertices.push(rainDrop.x, rainDrop.y, rainDrop.z)
+    rainDrop.velocity = {};
+    rainDrop.velocity = 0;
+}
+rainGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3));
+const rainMaterial = new THREE.PointsMaterial({
+    color: 0xaaaaaa,
+    transparent: true,
+    size: 0.2,
+});
+// rainMaterial.fog = false;
+const rainMeshParticles = new THREE.Points(rainGeometry, rainMaterial);
+scene.add(rainMeshParticles);
 
 
 
@@ -431,6 +437,7 @@ const listener = new THREE.AudioListener();
 camera.add(listener);
 
 const thunder = new THREE.Audio(listener);
+const rainSound = new THREE.Audio(listener);
 
 const audioLoader = new THREE.AudioLoader();
 audioLoader.load(thunderAudio, function (buffer) {
@@ -439,7 +446,13 @@ audioLoader.load(thunderAudio, function (buffer) {
     thunder.setVolume(0.5);
     thunder.play(0);
 });
-scene.add(thunder);
+audioLoader.load(rainAudio, function (buffer) {
+    rainSound.setBuffer(buffer);
+    rainSound.setLoop(true);
+    rainSound.setVolume(0.5);
+    rainSound.play();
+});
+scene.add(thunder, rainSound);
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
@@ -509,7 +522,33 @@ const tick = () =>
     // cloudParticles.forEach(p => {
     //     p.rotation.z = 0.001;
     // });
-    // lightning strikes
+
+    // rain particles
+
+
+    const positionAttribute = rainGeometry.getAttribute('position');
+    const vertices = positionAttribute.array;
+    
+    for (let i = 0; i < vertices.length; i += 3) {
+      const x = vertices[i];
+      let y = vertices[i + 1];
+      let velocity = vertices[i + 2];
+    
+      velocity -= 0.1 * Math.random() * 0.1;
+      y += velocity;
+    
+      if (y < -200) {
+        y = 200;
+        velocity = 0;
+      }
+    
+      vertices[i + 1] = y;
+      vertices[i + 2] = velocity;
+    }
+    
+    positionAttribute.needsUpdate = true;
+    rainGeometry.rotateY(0.002);
+   // lightning strikes
     lightningStrike.update(elapsedTime * 0.1);
     if (elapsedTime > 2 && elapsedTime < 12) {
     if (Math.random() > 0.93 || flash.power > 100 || elapsedTime < 5) {
