@@ -15,13 +15,13 @@ export default {
     {
         outDir: '../dist',
         emptyOutDir: true,
-        sourcemap: true,
+        sourcemap: false,
         rollupOptions: {
             input: {
               index: fileURLToPath(new URL('src/index.html', import.meta.url)),
-            //   input: 'src/script.js'
+              'index-d5d0bf12': fileURLToPath(new URL('src/index.html', import.meta.url)),
               hauntedHouse: fileURLToPath(new URL('src/haunted-house.html', import.meta.url)),
-            //   script: fileURLToPath(new URL('src/script.js', import.meta.url)),
+              script: fileURLToPath(new URL('src/script.js', import.meta.url)),
             }
        }
     }
