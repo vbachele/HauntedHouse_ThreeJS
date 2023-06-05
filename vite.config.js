@@ -19,8 +19,8 @@ export default {
         rollupOptions: {
             input: {
               index: fileURLToPath(new URL('src/index.html', import.meta.url)),
-              input: 'src/script.js'
-            //   hauntedHouse: fileURLToPath(new URL('src/haunted-house.html', import.meta.url)),
+            //   input: 'src/script.js'
+              hauntedHouse: fileURLToPath(new URL('src/haunted-house.html', import.meta.url)),
             //   script: fileURLToPath(new URL('src/script.js', import.meta.url)),
             }
        }
