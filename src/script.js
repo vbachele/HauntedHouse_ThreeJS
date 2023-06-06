@@ -4,12 +4,13 @@ import * as dat from 'lil-gui'
 import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js'
 import thunderAudio from "/sound/thunder.mp3"
 import rainAudio from "/sound/rain.mp3"
+import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
+
 
 /**
  * Base
  */
 // Debug
-const gui = new dat.GUI()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -332,30 +333,32 @@ for (let i = 0; i < 25; i++) { // create meshes and position randomly
 
 // rainParticles
 
-let rainCount = 1000;
+let rainCount = 5000;
 
 let rainGeometry = new THREE.BufferGeometry();
 const vertices = [];
+const yRange = 99; // Total range of y-coordinates
+const interval = yRange / (rainCount - 1); // Interval between each raindrop
+
 for (let i = 0; i < rainCount; i++) {
-    let rainDrop = new THREE.Vector3(
-        Math.random() * 400 - 200,
-        Math.random() * 500 - 250,
-        Math.random() * 400 - 200,
-    );
-    vertices.push(rainDrop.x, rainDrop.y, rainDrop.z)
-    rainDrop.velocity = {};
-    rainDrop.velocity = 0;
+  let rainDrop = new THREE.Vector3(
+    Math.random() * 400 - 200,
+    i * interval - yRange / 2, // Generate y-coordinate based on interval
+    Math.random() * 400 - 200
+  );
+  vertices.push(rainDrop.x, rainDrop.y, rainDrop.z);
+  rainDrop.velocity = 0; // Assign the initial velocity as 0
 }
-rainGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3));
+
+rainGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 const rainMaterial = new THREE.PointsMaterial({
-    color: 0xaaaaaa,
-    transparent: true,
-    size: 0.2,
+  color: 0xaaaaaa,
+  transparent: true,
+  size: 0.05,
 });
-// rainMaterial.fog = false;
 const rainMeshParticles = new THREE.Points(rainGeometry, rainMaterial);
 scene.add(rainMeshParticles);
-
+rainMaterial.fog = false;
 
 
 /**
@@ -363,16 +366,12 @@ scene.add(rainMeshParticles);
  */
 // Ambient light
 const ambientLight = new THREE.AmbientLight('#94979A', 0.12)
-gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 scene.add(ambientLight)
 
 // Directional light
 const moonLight = new THREE.DirectionalLight('#94979A', 0.12)
 moonLight.position.set(4, 5, - 2)
-gui.add(moonLight, 'intensity').min(0).max(1).step(0.001)
-gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001)
-gui.add(moonLight.position, 'y').min(- 5).max(5).step(0.001)
-gui.add(moonLight.position, 'z').min(- 5).max(5).step(0.001)
+
 scene.add(moonLight)
 
 // Door light
@@ -423,9 +422,7 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 4
-camera.position.y = 2
-camera.position.z = 5
+camera.position.set(-1, 2, 7);
 scene.add(camera)
 
 
@@ -455,7 +452,12 @@ audioLoader.load(rainAudio, function (buffer) {
 scene.add(thunder, rainSound);
 // Controls
 const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
+controls.enableZoom = false; // Disable zooming
+controls.enablePan = false; // Disable panning
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.target.set(0, 0, 0);
+controls.update();
 
 /**
  * Renderer
@@ -511,44 +513,39 @@ ghost3.shadow.camera.far = 7
 
 const clock = new THREE.Clock()
 let isDoorLightSpookey = true
-let ActiveLightningStrike = false;
 
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime();
 
-    // cloud particles 
-
-    // cloudParticles.forEach(p => {
-    //     p.rotation.z = 0.001;
-    // });
-
-    // rain particles
-
 
     const positionAttribute = rainGeometry.getAttribute('position');
     const vertices = positionAttribute.array;
-    
     for (let i = 0; i < vertices.length; i += 3) {
       const x = vertices[i];
       let y = vertices[i + 1];
-      let velocity = vertices[i + 2];
+      let z = vertices[i + 2];
+      let velocity = vertices[i + 3];
     
-      velocity -= 0.1 * Math.random() * 0.1;
       y += velocity;
-    
-      if (y < -200) {
-        y = 200;
+      z -= 0.002; // Update the Z coordinate
+      if (isNaN(y) || isNaN(z) || isNaN(velocity)) {
+        continue; // Skip this iteration and proceed to the next vertex
+      }
+      if (y < -99) {
+        y = 99;
         velocity = 0;
       }
-    
+
       vertices[i + 1] = y;
-      vertices[i + 2] = velocity;
+    // console.log(vertices[i + 1]);
+      vertices[i + 2] = z;
+      vertices[i + 3] = velocity;
     }
     
     positionAttribute.needsUpdate = true;
     rainGeometry.rotateY(0.002);
-   // lightning strikes
+   //lightning strikes
     lightningStrike.update(elapsedTime * 0.1);
     if (elapsedTime > 2 && elapsedTime < 12) {
     if (Math.random() > 0.93 || flash.power > 100 || elapsedTime < 5) {
@@ -565,7 +562,7 @@ const tick = () =>
         flash.power = 0;
     }
     if (elapsedTime > 12) {
-        scene.remove(lightningStrikeMesh1, lightningStrikeMesh2, lightningStrikeMesh3);
+        scene.remove(lightningStrikeMesh1, lightningStrikeMesh2, lightningStrikeMesh3, lightningStrikeMesh4);
 
     }
 
@@ -596,7 +593,7 @@ const tick = () =>
 
 
     // Update controls
-    controls.update()
+    controls.update();
 
     // Render
     renderer.render(scene, camera)

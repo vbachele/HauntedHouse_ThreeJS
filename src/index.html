@@ -5,10 +5,23 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Haunted House</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+		</style>
 		<link href="style.css" rel="stylesheet">
 	</head>
-	<body>
-		<H1 class="textHome">Welcome to the Haunted House</H1>
-		<a href="haunted-house.html" class="playButton">Play</a>
+	<body class="index">
+		<div class="container"></div>
+			<H1 class="textHome">Welcome to the Haunted House</H1>
+			<button id="playButton" name="playButton" onclick="redirectToPage()" class="playButton">
+				<p class="playButton-text">Play</p>
+			</button>
+	</div>
 	</body>
+	<script>
+		function redirectToPage() {
+		  // Replace "destination.html" with the URL of the page you want to redirect to
+		  window.location.href = "haunted-house.html";
+		}
+	  </script>
 </html>
