@@ -11,6 +11,11 @@ import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.j
  * Base
  */
 // Debug
+const gui = new dat.GUI()
+
+const parameters = {
+    flashColor: '0x062d89',
+}
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -303,48 +308,20 @@ lightningStrikeMesh4.scale.set(0.1, 0.15, 0.1);
 
 scene.add(lightningStrikeMesh1, lightningStrikeMesh2, lightningStrikeMesh3, lightningStrikeMesh4);
 
-// skyParticles
-let cloudParticles = [];
-
-// SkyCloud
-
-const skyGeometry = new THREE.PlaneGeometry( Math.random() * 500,  Math.random() *500);
-const skyMaterial = new THREE.MeshLambertMaterial({ 
-    map: skyColorTexture,
-    transparent: true,
-});
-skyMaterial.fog = false;
-
-for (let i = 0; i < 25; i++) { // create meshes and position randomly
-    let cloud = new THREE.Mesh(skyGeometry, skyMaterial);
-    cloud.position.set(
-        Math.random() * 300 + 10,
-        100,
-        Math.random() * 101 - 200,
-    );
-    cloud.scale.set(1.5, 1.5, 1.5);
-    cloud.rotation.x = 1.16;
-    cloud.rotation.y = - 0.12;
-    // cloud.rotation.z = Math.random();
-    cloud.material.opacity = 0.6;
-    cloudParticles.push(cloud);
-    scene.add(cloud);
-}
-
 // rainParticles
 
-let rainCount = 5000;
+let rainCount = 1500;
 
 let rainGeometry = new THREE.BufferGeometry();
 const vertices = [];
-const yRange = 99; // Total range of y-coordinates
-const interval = yRange / (rainCount - 1); // Interval between each raindrop
+// const yRange = 99; // Total range of y-coordinates
+// const interval = yRange / (rainCount - 1); // Interval between each raindrop
 
 for (let i = 0; i < rainCount; i++) {
   let rainDrop = new THREE.Vector3(
-    Math.random() * 400 - 200,
-    i * interval - yRange / 2, // Generate y-coordinate based on interval
-    Math.random() * 400 - 200
+    (Math.random() - 0.2) * 100,
+    (Math.random() - 0.5) * 100, // Generate y-coordinate based on interval
+    (Math.random() - 0.5) * 100,
   );
   vertices.push(rainDrop.x, rainDrop.y, rainDrop.z);
   rainDrop.velocity = 0; // Assign the initial velocity as 0
@@ -352,9 +329,13 @@ for (let i = 0; i < rainCount; i++) {
 
 rainGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 const rainMaterial = new THREE.PointsMaterial({
-  color: 0xaaaaaa,
+//   color: "#ffffff",
   transparent: true,
-  size: 0.05,
+  size: 0.1,
+  sizeAttenuation: true,
+  map: textureLoader.load('/textures/sky/rain3.png'),
+  alphaMap: textureLoader.load('/textures/sky/rain3.png'),
+  depthWrite: false, // if true, it will write to the depth buffer
 });
 const rainMeshParticles = new THREE.Points(rainGeometry, rainMaterial);
 scene.add(rainMeshParticles);
@@ -391,7 +372,8 @@ scene.add(ghost3)
 
 // flashing light
 
-const flash = new THREE.PointLight(0x062d89, 30, 500, 1.7);
+const flash = new THREE.PointLight(parameters.flashColor, 30, 500, 1.7);
+gui.add(parameters, 'flashColor').min(0).max(150).step(0.001);
 flash.position.set(30, 99, -30);
 scene.add(flash);
 /**

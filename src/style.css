@@ -41,14 +41,6 @@ body
     background: linear-gradient(35.58deg, #090909 18.63%, rgba(18, 18, 18, 0.97) 82.68%);
 }
 
-.webgl
-{
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
-}
-
 .playButton
 {
     display: flex;

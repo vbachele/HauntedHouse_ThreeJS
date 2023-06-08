@@ -2,7 +2,6 @@ const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in proc
 import { fileURLToPath } from 'url'
 
 
-
 export default {
     root: 'src/',
     publicDir: '../static/',
@@ -20,9 +19,9 @@ export default {
         rollupOptions: {
             input: {
                 index: 'src/index.html',
-               'index-058b17f4.js': fileURLToPath(new URL('src/index.html', import.meta.url)),
-                hauntedHouse: 'src/haunted-house.html',
-                script: 'src/script.js'
+            //    'index-058b17f4.js': fileURLToPath(new URL('src/index.html', import.meta.url)),
+                hauntedHouse: 'src/haunted-house/haunted-house.html',
+                css: 'src/style.css',
             }
        },
     }
