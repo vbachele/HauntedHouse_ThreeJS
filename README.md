@@ -4,7 +4,7 @@
 
 Go directly to https://haunted-house-gules.vercel.app/
 
-![Haunted House](https://cdn.discordapp.com/attachments/1113127213118791730/1113127270488481934/Capture_decran_2023-05-30_a_17.29.44.png)
+![Haunted House](https://media.discordapp.net/attachments/1113127213118791730/1115629654779383818/Capture_decran_2023-06-06_a_15.13.35.png?width=1692&height=936)
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
