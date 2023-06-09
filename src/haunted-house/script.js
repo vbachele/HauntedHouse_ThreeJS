@@ -14,7 +14,7 @@ import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.j
 const gui = new dat.GUI()
 
 const parameters = {
-    flashColor: '0x062d89',
+    flashColor: '#2c75ff',
 }
 
 // Canvas
@@ -422,7 +422,7 @@ const audioLoader = new THREE.AudioLoader();
 audioLoader.load(thunderAudio, function (buffer) {
     thunder.setBuffer(buffer);
     thunder.setLoop(false);
-    thunder.setVolume(0.5);
+    thunder.setVolume(0.2);
     thunder.play(0);
 });
 audioLoader.load(rainAudio, function (buffer) {
