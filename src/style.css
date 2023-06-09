@@ -58,15 +58,14 @@ body
 
 .playButton
 {
-    display: flex;
-    width: clamp(120px, 10vw, 325.4px);
-    /* margin-top: clamp(10px, 10vw, 40px); */
-    height: clamp(64px, 10vw, 78.85px);
-    background: #0E101C;
-    border-radius: 49.4144px;
-    align-items: center;
-    justify-content: center;
-    cursor:pointer;
+        background: 0x00aaff;
+        border-radius: 12px;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        outline-offset: 4px;
+        width: clamp(120px, 10vw, 325.4px);
+        height: clamp(64px, 10vw, 78.85px);
 
 
 }
@@ -76,17 +75,17 @@ body
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: clamp(16px, 2vw, 32px);
+    font-size: clamp(16px, 2vw, 24px);
     margin: 0; /* Reset any default margins */
     line-height: 1; /* Optional: Adjust line height if needed */
     text-align: center;
-    color: #FFFFFF;
+    color: black;
 
 }
 
-.playButton:hover {
+/* .playButton:hover {
     transform: scale(1.05);
-}
+} */
 
 .textHome
 {
@@ -95,6 +94,10 @@ body
     line-height: 97%;
     text-align: center;
 }
+
+  .playButton:active .playButton-text {
+    transform: translateY(-2px);
+  }
 
 .textHome, .playButton
 {

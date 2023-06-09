@@ -17,8 +17,9 @@ const parameters = {
 	cursorY: 0,
 	cursorZ: 0,
 	rotationSpeed: 0.02,
-	lightColor: '#ffffff',
-	backgroundColor: 0x090909
+	lightColor: '#2c75ff',
+	backgroundColor: 0x090909,
+	flashColor: '#ffffff',
 }
 /**
  * Textures
@@ -64,9 +65,6 @@ const generateParticles = () => {
 	for(let i = 0; i < parameters.particulesCount; i++) {
 		// const i3 = i * 3;
 		positions[i] = (Math.random() - 0.5) * (Math.random() * 8);
-		// positions[i3] = (Math.random() - 0.5) * 10;
-		// positions[i3 + 1] = - (Math.random()) * 3 ;
-		// positions[i3 + 2] = (Math.random() - 0.5) * 3;
 	}
 
 particlesGeometry.setAttribute(
@@ -144,9 +142,12 @@ const DirectionalLight = new THREE.DirectionalLight(parameters.lightColor, 1);
 DirectionalLight.position.set(1, 1, 0);
 scene.add(DirectionalLight);
 
-const flash = new THREE.PointLight(parameters.flashColor, 30, 3, 1.7);
-flash.position.set(0, 0, 0);
+const flash = new THREE.PointLight(parameters.flashColor, 30, 30, 1.7);
+flash.position.set(30,  1, -30);
 scene.add(flash);
+
+const hemisphereLight = new THREE.HemisphereLight("#2c75ff", "#2c75ff", 0.5); // Parameters: skyColor, groundColor, intensity (0.5 in this example)
+scene.add(hemisphereLight);
 
 /**
  * Sizes
@@ -247,6 +248,7 @@ const clock = new THREE.Clock();
 let previousTime = 0;
 
 const lightningStrikeAnimation = (elapsedTime) => {
+	lightningStrike.update(elapsedTime * 0.1);
 	   if (Math.random() > 0.93 || flash.power > 100) {
 		   if (flash.power < 100) {
 				   flash.position.set(
@@ -261,12 +263,11 @@ const lightningStrikeAnimation = (elapsedTime) => {
 
 const rainDrop = (elapsedTime) => {
 	thunder.play(0);
-	lightningStrike.update(elapsedTime * 0.1);
+	lightningStrikeAnimation(elapsedTime);
 	const positionAttribute = particlesGeometry.getAttribute('position');
     const vertices = positionAttribute.array;
 
 	parameters.particulesSize = 0.1;
-	parameters.particulesCount = 10000;
 
     for (let i = 0; i < vertices.length; i += 3) {
 		// let test =(Math.random() - 0.5) * (Math.random() * 8)
@@ -319,7 +320,6 @@ animate();
 //ButtonClick
 const playButton = document.getElementById('playButton'); // Replace 'play-button' with the actual ID of your play button element
 	playButton.addEventListener('click', () => {
-		lightningStrikeAnimation();
 		buttonclick = true;
 		setTimeout(() => {
 			window.location.href = './haunted-house/haunted-house.html';

@@ -373,7 +373,6 @@ scene.add(ghost3)
 // flashing light
 
 const flash = new THREE.PointLight(parameters.flashColor, 30, 500, 1.7);
-gui.add(parameters, 'flashColor').min(0).max(150).step(0.001);
 flash.position.set(30, 99, -30);
 scene.add(flash);
 /**
