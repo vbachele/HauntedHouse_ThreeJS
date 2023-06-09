@@ -11,7 +11,6 @@ import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.j
  * Base
  */
 // Debug
-const gui = new dat.GUI()
 
 const parameters = {
     flashColor: '#2c75ff',
@@ -402,7 +401,18 @@ window.addEventListener('resize', () =>
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+let fov = 75;
+
+if (isMobileDevice()) {
+	// Code for mobile devices
+	console.log('Mobile device detected');
+	fov = 120;
+  } else {
+	// Code for non-mobile devices
+	console.log('Non-mobile device detected');
+  }
+
+const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.1, 100)
 camera.position.set(-1, 2, 7);
 scene.add(camera)
 
@@ -583,4 +593,12 @@ const tick = () =>
     window.requestAnimationFrame(tick)
 }
 
+
+function isMobileDevice() {
+	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  
+
 tick()
+
+  

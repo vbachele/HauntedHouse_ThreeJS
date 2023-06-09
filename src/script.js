@@ -146,9 +146,6 @@ const flash = new THREE.PointLight(parameters.flashColor, 30, 30, 1.7);
 flash.position.set(30,  1, -30);
 scene.add(flash);
 
-const hemisphereLight = new THREE.HemisphereLight("#2c75ff", "#2c75ff", 0.5); // Parameters: skyColor, groundColor, intensity (0.5 in this example)
-scene.add(hemisphereLight);
-
 /**
  * Sizes
  */
@@ -178,7 +175,15 @@ window.addEventListener('resize', () => {
 const cameraGroup = new THREE.Group();
 scene.add(cameraGroup);
 // Base camera
-const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
+let fov = 35;
+
+if (isMobileDevice()) {
+	// Code for mobile devices
+	fov = 75;
+}
+
+
+const camera = new THREE.PerspectiveCamera(fov, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 6
 cameraGroup.add(camera)
 
@@ -326,3 +331,9 @@ const playButton = document.getElementById('playButton'); // Replace 'play-butto
 		  }, 4000); // Delay time in milliseconds (2 seconds in this example)
 });
 
+
+
+function isMobileDevice() {
+	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  
