@@ -327,7 +327,7 @@ const playButton = document.getElementById('playButton'); // Replace 'play-butto
 	playButton.addEventListener('click', () => {
 		buttonclick = true;
 		setTimeout(() => {
-			window.location.href = './haunted-house/haunted-house.html';
+			window.location.href = './Experience/haunted-house.html';
 		  }, 4000); // Delay time in milliseconds (2 seconds in this example)
 });
 
