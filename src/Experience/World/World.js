@@ -5,6 +5,8 @@ import House from "./House.js";
 import Graveyard from "./Graveyard.js";
 import Ghost from "./Ghost.js";
 import Fog from "./Fog.js";
+import Bush from "./Bush.js";
+import LightningStrikes from "./LightningStrike.js";
 
 export default class World
 {
@@ -21,6 +23,8 @@ export default class World
 			this.house = new House();
 			this.graveyard = new Graveyard();
 			this.ghosts = new Ghost();
+			this.bushes = new Bush();
+			this.lightningStrike = new LightningStrikes();
 		});
 	}
 
@@ -31,6 +35,10 @@ export default class World
 		if(this.ghosts)
 		{
 			this.ghosts.update();
+		}
+		if(this.lightningStrike)
+		{
+			this.lightningStrike.update();
 		}
 	}
 }

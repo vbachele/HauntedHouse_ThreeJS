@@ -25,6 +25,7 @@ export default class Ressources extends EventEmitter
 		this.loaders.gltfLoader = new GLTFLoader();
 		this.loaders.textureLoader = new THREE.TextureLoader();
 		this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader();
+		this.loaders.audioLoader = new THREE.AudioLoader();
 	}
 
 	startLoading()
@@ -55,6 +56,7 @@ export default class Ressources extends EventEmitter
 				}
 				);
 			}
+			
 		}
 	}
 

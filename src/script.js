@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import * as dat from 'lil-gui'
 import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js'
-import thunderAudio from "/sound/thunder.mp3"
+import thunderAudio from "/audio/thunder.mp3"
 
 
 /**

@@ -7,8 +7,7 @@ const experience = new Experience(document.querySelector('canvas.webgl')) // we 
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // import * as dat from 'lil-gui'
 // import { LightningStrike } from 'three/examples/jsm/geometries/LightningStrike.js'
-// import thunderAudio from "/sound/thunder.mp3"
-// import rainAudio from "/sound/rain.mp3"
+// import rainAudio from "/audio/rain.mp3"
 // import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
 
 
@@ -210,6 +209,7 @@ const experience = new Experience(document.querySelector('canvas.webgl')) // we 
 // bush4.position.set(- 1, 0.05, 2.6);
 
 // house.add(bush1, bush2, bush3, bush4)
+
 
 // //graveyard
 
@@ -433,7 +433,7 @@ const experience = new Experience(document.querySelector('canvas.webgl')) // we 
 // const rainSound = new THREE.Audio(listener);
 
 // const audioLoader = new THREE.AudioLoader();
-// audioLoader.load(thunderAudio, function (buffer) {
+// this.audioLoader.load(thunderAudio, function (buffer) {
 //     thunder.setBuffer(buffer);
 //     thunder.setLoop(false);
 //     thunder.setVolume(0.2);

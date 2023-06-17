@@ -128,11 +128,31 @@ export default [
 		name: "graveyardHeightTexture",
 		type: "texture",
 		path: "/textures/graveyard/height.png",
-	}
-
-
-
-
-
-
+	},
+	//BUSH
+	{
+		name: "bushAmbientOcclusionTexture",
+		type: "texture",
+		path: "/textures/bush/ambientOcclusion.jpg",
+	},
+	{
+		name: "bushColorTexture",
+		type: "texture",
+		path: "/textures/bush/color.jpg",
+	},
+	{
+		name: "bushNormalTexture",
+		type: "texture",
+		path: "/textures/bush/normal.jpg",
+	},
+	{
+		name: "bushRoughnessTexture",
+		type: "texture",
+		path: "/textures/bush/roughness.jpg",
+	},
+	{
+		name: "bushHeightTexture",
+		type: "texture",
+		path: "/textures/bush/height.png",
+	},
 ]
