@@ -9,7 +9,7 @@ export default class Environment
 		this.scene = this.experience.scene;
 		this.ressources = this.experience.ressources;
 		this.setMoonLight();
-		// this.setEnvironmentMap();	
+		this.setEnvironmentMap();	
 	}
 
 	setEnvironmentMap()

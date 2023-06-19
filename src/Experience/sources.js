@@ -131,34 +131,27 @@ export default [
 	},
 	//BUSH
 	{
-		name: "bushAmbientOcclusionTexture",
-		type: "texture",
-		path: "/textures/bush/ambientOcclusion.jpg",
+		name: "bushModel",
+		type: "gltfModel",
+		path: "/models/bush/bush.gltf",
 	},
+	//GRASS
 	{
-		name: "bushColorTexture",
-		type: "texture",
-		path: "/textures/bush/color.jpg",
-	},
-	{
-		name: "bushNormalTexture",
-		type: "texture",
-		path: "/textures/bush/normal.jpg",
-	},
-	{
-		name: "bushRoughnessTexture",
-		type: "texture",
-		path: "/textures/bush/roughness.jpg",
-	},
-	{
-		name: "bushHeightTexture",
-		type: "texture",
-		path: "/textures/bush/height.png",
+		name: "grassModel",
+		type: "gltfModel",
+		path: "/models/grass/grass_medium_01_1k.gltf",
+
 	},
 	//RAIN
 	{
 		name: "rainNormalTexture",
 		type: "texture",
 		path: "/textures/sky/normal.png",
+	},
+	//CROW
+	{
+		name: "crowModel",
+		type: "gltfModel",
+		path: "/models/crow/crow.glb",
 	},
 ]

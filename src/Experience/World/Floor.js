@@ -8,15 +8,31 @@ export default class Floor
 		this.experience = new Experience();
 		this.scene = this.experience.scene;
 		this.ressources = this.experience.ressources;
+		this.ressource = this.ressources.items.grassModel.scene;
 		this.setGeometry();
 		this.setTextures();
 		this.setMaterial();
+		this.setGrassModel();
 		this.setMesh();
 	}
 
 	setGeometry()
 	{
 		this.geometry =  new THREE.PlaneGeometry(20, 20);
+	}
+
+	setGrassModel() {
+		const count = 100;
+		this.grassModel = this.ressource.clone(); // Assuming you have a grass model loaded
+		for(let i = 0; i < count; i++)
+		{
+			const x = Math.random() + 1;
+			const y = Math.random() + 1;
+			this.grassModel.scale.set(x, y, 1);
+			const grassInstance = this.grassModel.clone();
+			grassInstance.position.set(THREE.MathUtils.randFloat(-8, 8), 0, THREE.MathUtils.randFloat(-10, 10));
+			this.scene.add(grassInstance);
+		}
 	}
 
 	setTextures()

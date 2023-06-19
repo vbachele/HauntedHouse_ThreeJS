@@ -8,6 +8,7 @@ import Fog from "./Fog.js";
 import Bush from "./Bush.js";
 import LightningStrikes from "./LightningStrike.js";
 import Rain from "./Rain.js";
+import Crow from "./Crow.js";
 
 export default class World
 {
@@ -27,6 +28,7 @@ export default class World
 			this.bushes = new Bush();
 			this.lightningStrike = new LightningStrikes();
 			this.rain = new Rain();
+			this.crow = new Crow();
 		});
 	}
 
@@ -45,6 +47,10 @@ export default class World
 		if(this.rain)
 		{
 			this.rain.update();
+		}
+		if(this.crow)
+		{
+			this.crow.update();
 		}
 	}
 }

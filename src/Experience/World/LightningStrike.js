@@ -32,7 +32,7 @@ export default class LightningStrikes
 
 	setLights()
 	{
-		this.flash = new THREE.PointLight(this.flashColor, 30, 500, 1);
+		this.flash = new THREE.PointLight(this.flashColor, 30, 500, 0.5);
 		this.flash.position.set(30, 99, -30);
 		this.scene.add(this.flash);
 	}

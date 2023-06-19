@@ -25,16 +25,16 @@ export default class Rain
 
 	setRainGeometry()
 	{
-		let rainCount = 1500;
+		let rainCount = 5000;
 		this.rainGeometry = new THREE.BufferGeometry();
 		const vertices = [];
 		for (let i = 0; i < rainCount; i++) 
 		{
 			this.rainDrop = new THREE.Vector3
 			(
-				(Math.random() - 0.5) * 100,
-				(Math.random() - 0.5) * 100, // Generate y-coordinate based on interval
-				(Math.random() - 0.5) * 100,
+				(Math.random() - 0.5) * 50,
+				(Math.random() - 0.1) * 50, // Generate y-coordinate based on interval
+				(Math.random() - 0.5) * 50,
 			);
 			vertices.push(this.rainDrop.x, this.rainDrop.y, this.rainDrop.z);
 			this.rainDrop.velocity = 0; // Assign the initial velocity as 0
@@ -47,7 +47,7 @@ export default class Rain
 	{
 		this.rainMaterial = new THREE.PointsMaterial({
 		  transparent: true,
-		  size: 0.1,
+		  size: 0.15,
 		  sizeAttenuation: true,
 		  map: this.ressources.items.rainNormalTexture,
 		  alphaMap: this.ressources.items.rainNormalTexture,
@@ -82,21 +82,23 @@ export default class Rain
 		const positionAttribute = this.rainGeometry.getAttribute('position');
 		const vertices = positionAttribute.array;
 		for (let i = 0; i < vertices.length; i += 3) {
-		const x = vertices[i];
+		let x = vertices[i];
 		let y = vertices[i + 1];
 		let z = vertices[i + 2];
 		let velocity = vertices[i + 3];
 		
 		y += velocity;
 		z -= 0.002; // Update the Z coordinate
+		x = (Math.random() - 0.5) * 50; // Update the X coordinate with a sine wave
 		if (isNaN(y) || isNaN(z) || isNaN(velocity)) {
 			continue; // Skip this iteration and proceed to the next vertex
 		}
-		if (y < -99) {
+		if (y < 0) {
 			y = 99;
 			velocity = 0;
 		}
 
+		vertices[i] = x;
 		vertices[i + 1] = y;
 		// console.log(vertices[i + 1]);
 		vertices[i + 2] = z;
