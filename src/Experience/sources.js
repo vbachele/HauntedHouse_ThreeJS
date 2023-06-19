@@ -155,4 +155,10 @@ export default [
 		type: "texture",
 		path: "/textures/bush/height.png",
 	},
+	//RAIN
+	{
+		name: "rainNormalTexture",
+		type: "texture",
+		path: "/textures/sky/normal.png",
+	},
 ]

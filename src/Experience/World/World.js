@@ -7,6 +7,7 @@ import Ghost from "./Ghost.js";
 import Fog from "./Fog.js";
 import Bush from "./Bush.js";
 import LightningStrikes from "./LightningStrike.js";
+import Rain from "./Rain.js";
 
 export default class World
 {
@@ -25,6 +26,7 @@ export default class World
 			this.ghosts = new Ghost();
 			this.bushes = new Bush();
 			this.lightningStrike = new LightningStrikes();
+			this.rain = new Rain();
 		});
 	}
 
@@ -39,6 +41,10 @@ export default class World
 		if(this.lightningStrike)
 		{
 			this.lightningStrike.update();
+		}
+		if(this.rain)
+		{
+			this.rain.update();
 		}
 	}
 }
