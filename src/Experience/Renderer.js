@@ -29,13 +29,14 @@ export default class Renderer
 		this.instance.setClearColor('#262837')
 		this.instance.setSize(this.sizes.width, this.sizes.height)
 		this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2))
+		this.camera.instance.renderOrder = 1;
 
 	}
 
 	resize()
 	{
 		this.instance.setSize(this.sizes.width, this.sizes.height)
-		this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio))
+		this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio , 2))
 	}
 
 	update()

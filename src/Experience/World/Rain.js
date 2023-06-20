@@ -25,7 +25,7 @@ export default class Rain
 
 	setRainGeometry()
 	{
-		let rainCount = 5000;
+		let rainCount = 1500;
 		this.rainGeometry = new THREE.BufferGeometry();
 		const vertices = [];
 		for (let i = 0; i < rainCount; i++) 

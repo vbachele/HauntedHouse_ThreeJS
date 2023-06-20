@@ -9,6 +9,7 @@ import Bush from "./Bush.js";
 import LightningStrikes from "./LightningStrike.js";
 import Rain from "./Rain.js";
 import Crow from "./Crow.js";
+import Moon from "./Moon.js";
 
 export default class World
 {
@@ -29,6 +30,7 @@ export default class World
 			this.lightningStrike = new LightningStrikes();
 			this.rain = new Rain();
 			this.crow = new Crow();
+			this.moon = new Moon();
 		});
 	}
 

@@ -51,6 +51,7 @@ export default class Experience
 
 	update() // Update each frame
 	{
+		
 		this.camera.update();
 		this.world.update();
 		this.renderer.update();

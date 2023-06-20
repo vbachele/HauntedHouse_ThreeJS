@@ -154,4 +154,10 @@ export default [
 		type: "gltfModel",
 		path: "/models/crow/crow.glb",
 	},
+	//MOON
+	{
+		name: "moonModel",
+		type: "gltfModel",
+		path: "/models/moon/moon.glb",
+	}
 ]
