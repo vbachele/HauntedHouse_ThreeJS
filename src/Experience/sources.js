@@ -159,5 +159,11 @@ export default [
 		name: "moonModel",
 		type: "gltfModel",
 		path: "/models/moon/moon.glb",
-	}
+	},
+	//HOUSE
+	{
+		name: "houseModel",
+		type: "gltfModel",
+		path: "/models/house/house3.glb",
+	},
 ]

@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import rainAudio from "/audio/rain.mp3"
 import Experience from "../Experience";
+import * as CANNON from "cannon-es";
+
 
 
 export default class Rain
@@ -11,8 +13,47 @@ export default class Rain
 		this.scene = this.experience.scene;
 		this.camera = this.experience.camera;
 		this.ressources = this.experience.ressources;
+		this.physicsWorld = this.experience.world.physicsWorld;
 		this.timer = this.experience.time;
 		this.setRain();
+	}
+
+	setTest()
+	{
+		// Create sphere
+		const sphereGeometry = new THREE.SphereGeometry(1, 20, 20)
+		const sphereMaterial = new THREE.MeshStandardMaterial
+			({
+				metalness: 0.3,
+				roughness: 0.4,
+				envMapIntensity: 0.5
+			})
+		this.sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+		this.sphere.castShadow = true;
+		this.sphere.scale.set(1, 1, 1);
+		this.sphere.position.copy(new THREE.Vector3(3, 7, 3));
+		this.scene.add(this.sphere);
+
+		this.concreteMaterial = new CANNON.Material("concrete");
+		this.plasticMaterial = new CANNON.Material("plastic");
+		const concretePlasticContactMaterial = new CANNON.ContactMaterial(this.concreteMaterial, this.plasticMaterial, {
+			friction: 0.1,
+			restitution: 0.7,
+		});
+		this.physicsWorld.addContactMaterial(concretePlasticContactMaterial);
+
+
+		this.sphereShape = new CANNON.Sphere(1);
+		this.sphereBody = new CANNON.Body({ 
+			mass: 1,
+			shape: this.sphereShape,
+			position: new CANNON.Vec3(3, 7, 3), 
+			material: this.plasticMaterial,
+		});
+		this.physicsWorld.addBody(this.sphereBody);
+		console.log("physics = ", this.physicsWorld);
+
+
 	}
 
 	setRain()
@@ -25,7 +66,7 @@ export default class Rain
 
 	setRainGeometry()
 	{
-		let rainCount = 1500;
+		let rainCount = 1000;
 		this.rainGeometry = new THREE.BufferGeometry();
 		const vertices = [];
 		for (let i = 0; i < rainCount; i++) 
@@ -63,7 +104,7 @@ export default class Rain
 	}
 
 	setRainAudio()
-	{
+	{	
 		this.listener = new THREE.AudioListener();
 		this.camera.instance.add(this.listener);
 		this.rain = new THREE.Audio(this.listener);
@@ -93,19 +134,19 @@ export default class Rain
 		if (isNaN(y) || isNaN(z) || isNaN(velocity)) {
 			continue; // Skip this iteration and proceed to the next vertex
 		}
-		if (y < 0) {
+		if (y < -5) {
 			y = 99;
 			velocity = 0;
 		}
 
 		vertices[i] = x;
 		vertices[i + 1] = y;
-		// console.log(vertices[i + 1]);
 		vertices[i + 2] = z;
 		vertices[i + 3] = velocity;
 		}
 		
 		positionAttribute.needsUpdate = true;
 		this.rainGeometry.rotateY(0.002);
+
 	}
 }

@@ -19,7 +19,7 @@ export default class Crow
 
 
 		this.time = 0; // Current time
-		this.rotationSpeed = 0.008; // Speed of rotation
+		this.rotationSpeed = 0.013; // Speed of rotation
 		this.radius = 8; // Radius of circular motion
 	  }
 

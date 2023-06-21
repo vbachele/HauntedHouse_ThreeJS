@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import Experience from "../Experience";
+import * as CANNON from "cannon-es";
 
 export default class Floor
 {
@@ -9,17 +10,31 @@ export default class Floor
 		this.scene = this.experience.scene;
 		this.ressources = this.experience.ressources;
 		this.ressource = this.ressources.items.grassModel.scene;
+		this.physicsWorld = this.experience.world.physicsWorld;
 		this.setGeometry();
 		this.setTextures();
 		this.setMaterial();
 		this.setGrassModel();
 		this.setMesh();
+		// this.setPhysics();
 	}
 
 	setGeometry()
 	{
 		this.geometry =  new THREE.PlaneGeometry(20, 20);
 	}
+
+	// setPhysics()
+	// {
+	// 	this.floorShape = new CANNON.Plane();
+	// 	this.floorBody = new CANNON.Body();
+	// 	this.floorBody.material = this.experience.world.rain.concreteMaterial;
+	// 	console.log("this.floorBody.material", this.floorBody.material);
+	// 	this.floorBody.mass = 0;
+	// 	this.floorBody.addShape(this.floorShape);
+	// 	this.floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1, 0, 0), Math.PI * 0.5);
+	// 	this.physicsWorld.addBody(this.floorBody);
+	// }
 
 	setGrassModel() {
 		const count = 100;

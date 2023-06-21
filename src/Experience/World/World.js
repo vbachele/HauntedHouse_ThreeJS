@@ -10,6 +10,8 @@ import LightningStrikes from "./LightningStrike.js";
 import Rain from "./Rain.js";
 import Crow from "./Crow.js";
 import Moon from "./Moon.js";
+import * as CANNON from "cannon-es";
+
 
 export default class World
 {
@@ -17,9 +19,11 @@ export default class World
 	{
 		this.experience = new Experience();
 		this.scene = this.experience.scene;
+		this.time = this.experience.time;
 		this.ressources = this.experience.ressources;
 		this.ressources.on('ready', () =>
 		{
+			this.setGravityWorld();
 			this.floor = new Floor();
 			this.environment = new Environment();
 			this.fog = new Fog();
@@ -27,15 +31,23 @@ export default class World
 			this.graveyard = new Graveyard();
 			this.ghosts = new Ghost();
 			this.bushes = new Bush();
-			this.lightningStrike = new LightningStrikes();
 			this.rain = new Rain();
-			this.crow = new Crow();
+			this.lightningStrike = new LightningStrikes();
+			// this.crow = new Crow();
 			this.moon = new Moon();
 		});
 	}
 
+	setGravityWorld()
+	{
+		this.physicsWorld = new CANNON.World();
+		this.physicsWorld.gravity.set(0, -9.82, 0);
+	}
+
 	update()
 	{
+		if (this.physicsWorld)
+			this.physicsWorld.step(1 / 60, this.experience.delta, 3);
 		if(this.house)
 			this.house.doorLightUpdate();
 		if(this.ghosts)

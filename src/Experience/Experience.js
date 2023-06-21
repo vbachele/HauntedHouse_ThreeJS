@@ -16,7 +16,8 @@ export default class Experience
 		if (instance)
 			return instance
 		instance = this;
-		this.canvas = canvas
+
+		this.canvas = canvas;
 
 		// Set up
 		this.time = new Time();
