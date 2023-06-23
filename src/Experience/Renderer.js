@@ -11,6 +11,10 @@ export default class Renderer
 		this.time = this.experience.time;
 		this.canvas = this.experience.canvas;
 		this.camera = this.experience.camera;
+		this.sceneLoaded = false;
+		this.targetY = 2;
+		this.currentY = 10;
+		this.currentZ = 10;
 		this.setBackgroundColor();
 		this.setInstance();
 	}
@@ -50,6 +54,20 @@ export default class Renderer
 
 	update()
 	{
+		if (!this.sceneLoaded)
+			this.loadFirstScene();
 		this.instance.render(this.scene, this.camera.instance);
+	}
+
+	loadFirstScene()
+	{
+		this.currentY -= 0.08;
+		this.currentX -= 0.08;
+		this.camera.instance.position.y = this.currentY;
+		this.camera.instance.position.z = this.currentZ;
+		if (this.currentY < 2)
+		{
+			this.sceneLoaded = true;
+		}
 	}
 }

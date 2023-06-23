@@ -20,7 +20,7 @@ export default {
             input: {
                 index: 'src/index.html',
             //    'index-058b17f4.js': fileURLToPath(new URL('src/index.html', import.meta.url)),
-                hauntedHouse: 'src/haunted-house/haunted-house.html',
+                hauntedHouse: 'src/Experience/haunted-house.html',
                 css: 'src/style.css',
             }
        },

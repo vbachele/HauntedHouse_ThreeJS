@@ -20,89 +20,6 @@ export default [
 		type: 'texture',
 		path: '/textures/grass/roughness.jpg',
 	},
-	// WALLS
-	{
-		name: "wallAmbientOcclusionTexture",
-		type: "texture",
-		path: "/textures/bricks/ambientOcclusion.jpg",
-	},
-	{
-		name: "wallColorTexture",
-		type: "texture",
-		path: "/textures/bricks/color.jpg",
-	},
-	{
-		name: "wallNormalTexture",
-		type: "texture",
-		path: "/textures/bricks/normal.jpg",
-	},
-	{
-		name: "wallRoughnessTexture",
-		type: "texture",
-		path: "/textures/bricks/roughness.jpg",
-	},
-	//ROOF
-	{
-		name: "roofAmbientOcclusionTexture",
-		type: "texture",
-		path: "/textures/roof/ambientOcclusion.jpg",
-	},
-	{
-		name: "roofColorTexture",
-		type: "texture",
-		path: "/textures/roof/color.jpg",
-	},
-	{
-		name: "roofNormalTexture",
-		type: "texture",
-		path: "/textures/roof/normal.jpg",
-	},
-	{
-		name: "roofRoughnessTexture",
-		type: "texture",
-		path: "/textures/roof/roughness.jpg",
-	},
-	{
-		name: "roofHeightTexture",
-		type: "texture",
-		path: "/textures/roof/height.png",
-	},
-	//DOORS
-	{
-		name: "doorAmbientOcclusionTexture",
-		type: "texture",
-		path: "/textures/door/ambientOcclusion.jpg",
-	},
-	{
-		name: "doorAlphaTexture",
-		type: "texture",
-		path: "/textures/door/alpha.jpg",
-	},
-	{
-		name: "doorColorTexture",
-		type: "texture",
-		path: "/textures/door/color.jpg",
-	},
-	{
-		name: "doorHeightTexture",
-		type: "texture",
-		path: "/textures/door/height.jpg",
-	},
-	{
-		name: "doorNormalTexture",
-		type: "texture",
-		path: "/textures/door/normal.jpg",
-	},
-	{
-		name: "doorRoughnessTexture",
-		type: "texture",
-		path: "/textures/door/roughness.jpg",
-	},
-	{
-		name: "doorMetalnessTexture",
-		type: "texture",
-		path: "/textures/door/metalness.jpg",
-	},
 	//GRAVEYYARD
 	{
 		name: "graveyardAmbientOcclusionTexture",
@@ -135,7 +52,7 @@ export default [
 		type: "gltfModel",
 		path: "/models/bush/bush.gltf",
 	},
-	//GRASS
+	//BUSHES
 	{
 		name: "grassModel",
 		type: "gltfModel",
@@ -166,4 +83,11 @@ export default [
 		type: "gltfModel",
 		path: "/models/house/house3.glb",
 	},
+	//Particules
+	{
+		name: "particulesTexture",
+		type: "texture",
+		path: "/textures/particules/particules.png",
+
+	}
 ]

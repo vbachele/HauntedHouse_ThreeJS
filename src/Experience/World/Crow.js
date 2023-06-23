@@ -27,8 +27,8 @@ export default class Crow
 	{
 		this.crow1 = this.ressource.clone()
 		this.crow1.scale.set(3, 3, 3);
-		this.crow1.position.x = 2;
-		this.crow1.position.z = 2;
+		this.crow1.position.x = -2;
+		this.crow1.position.z = -2;
 		this.crow1.position.y = 5;
 	
 		this.crow1.rotation.x = Math.PI * 0.55;
@@ -59,8 +59,8 @@ export default class Crow
 		this.time += this.rotationSpeed;
 
 		const angle = this.time; // Use the time directly for angle calculation
-		const x = Math.cos(angle) * this.radius -2;
-		const z = Math.sin(angle) * this.radius -2;
+		const x = Math.cos(angle) * this.radius -7;
+		const z = Math.sin(angle) * this.radius -6;
 	  
 		// Calculate the distance between the crow and the camera
 		const distanceToCamera = this.crow1.position.distanceTo(this.camera.position);

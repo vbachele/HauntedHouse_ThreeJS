@@ -29,16 +29,20 @@
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js" integrity="sha512-qF6akR/fsZAB4Co1QDDnUXWnaQseLGXoniuSuSlPQK6+aWhlMZcHzkasCSlnWoe+TJuudlka1/IQ01Dnhgq95g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/CSSRulePlugin.min.js" integrity="sha512-9BAIrJcd9W75AJsWgJTfaoRkdbk2EI92JkWWsnRx6+T8NfqrIFNrb22stBpB4ii+cbgbUG24d5BPyl4JMAw5aw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	  <script>
-		const content = CSSRulePlugin.getRule(".content::before");
-		const h1 = document.querySelector(".textHome");
-		const button = document.querySelector(".playButton");
-		const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
-		tl.from(
-		  content,
-		  {delay: 0.5, duration: 4, cssRule: { scaleX: 0}})
-		  .to(h1, { duration: 2, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)" , y: '30px'}, "-=3")
-		  .to(button, { duration: 2, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)", y: '30px' }, "-=2");
+		// const content = CSSRulePlugin.getRule(".content::before");
+		// const h1 = document.querySelector(".textHome");
+		// const button = document.querySelector(".playButton");
+		// const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+		// tl.from(
+		//   content,
+		//   {delay: 0.5, duration: 4, cssRule: { scaleX: 0}})
+		//   .to(h1, { duration: 2, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)" , y: '30px'}, "-=3")
+		//   .to(button, { duration: 2, clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)", y: '30px' }, "-=2");
 	  </script>
+
+	  
+
+
 	</body>
 	
 </html>

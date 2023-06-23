@@ -33,7 +33,7 @@ export default class World
 			this.bushes = new Bush();
 			this.rain = new Rain();
 			this.lightningStrike = new LightningStrikes();
-			// this.crow = new Crow();
+			this.crow = new Crow();
 			this.moon = new Moon();
 		});
 	}
