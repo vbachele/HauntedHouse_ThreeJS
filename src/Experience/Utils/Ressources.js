@@ -14,9 +14,9 @@ export default class Ressources extends EventEmitter
 		this.items = {};
 		this.toLoad = this.sources.length; // Number of items to load
 		this.loaded = 0; // Number of items already loaded
-
 		this.setLoaders();
 		this.startLoading();
+		this.isLoaded = false;
 	}
 
 	setLoaders()

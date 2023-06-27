@@ -4,10 +4,123 @@
     padding: 0;
 }
 
+html,
+body
+{
+
+    font-family: 'Inter'; 
+    /* font-weight: 700;
+    font-size: 100px;
+    line-height: 100px;  */
+    height: 100vh;
+    color: white;  
+}
+
+.home 
+{
+ z-index: 1;
+    position: absolute;
+    width:100%;
+    height: 100vh;
+    display: grid;
+    place-content: center;
+
+}
+.container
+{
+    z-index: 1;
+    position: absolute;
+    width:100%;
+    height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+.content
+{
+    display: flex;
+    flex-direction: column;
+    gap: 5em;
+    width: 100%;
+    padding-top: 3em;
+    position: relative;
+    align-items: center;
+    
+}
+
+.content:before {
+    content: '';
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    transform: scaleX(1);
+}
+
 .webgl
 {
     position: fixed;
     top: 0;
     left: 0;
     outline: none;
+}
+
+.playButton
+{
+        background: 0x00aaff;
+        border-radius: 12px;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        outline-offset: 4px;
+        width: clamp(120px, 10vw, 325.4px);
+        height: clamp(64px, 10vw, 78.85px);
+
+
+}
+
+.playButton-text
+{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: clamp(16px, 2vw, 24px);
+    margin: 0; /* Reset any default margins */
+    line-height: 1; /* Optional: Adjust line height if needed */
+    text-align: center;
+    color: black;
+
+}
+
+/* .playButton:hover {
+    transform: scale(1.05);
+} */
+
+.textHome
+{
+    font-size: clamp(2rem, 5vw, 4rem);
+    width: 50vw;
+    line-height: 97%;
+    text-align: center;
+}
+
+  .playButton:active .playButton-text {
+    transform: translateY(-2px);
+  }
+
+.textHome, .playButton
+{
+    /* flex-basis: 0;
+    flex-grow: 1; */
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}  
+
+.hauntedHouse
+{
+    height: 100vh;
+}
+section:nth-child(odd)
+{
+    justify-content: flex-end;
 }

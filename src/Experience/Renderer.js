@@ -13,8 +13,8 @@ export default class Renderer
 		this.camera = this.experience.camera;
 		this.sceneLoaded = false;
 		this.targetY = 2;
-		this.currentY = 10;
-		this.currentZ = 10;
+		this.currentY = 18;
+		this.currentZ = 21;
 		this.setBackgroundColor();
 		this.setInstance();
 	}
@@ -54,15 +54,17 @@ export default class Renderer
 
 	update()
 	{
-		if (!this.sceneLoaded)
-			this.loadFirstScene();
+		// if (!this.sceneLoaded) // scene loading and play button clicked
+		if (this.experience.home.button)
+			if (this.experience.home && this.experience.home.button.clicked  && !this.sceneLoaded)
+				this.loadFirstScene();
 		this.instance.render(this.scene, this.camera.instance);
 	}
 
 	loadFirstScene()
 	{
-		this.currentY -= 0.08;
-		this.currentX -= 0.08;
+		this.currentY -= 0.04;
+		this.currentZ -= 0.03;
 		this.camera.instance.position.y = this.currentY;
 		this.camera.instance.position.z = this.currentZ;
 		if (this.currentY < 2)

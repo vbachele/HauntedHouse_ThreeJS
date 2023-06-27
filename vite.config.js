@@ -19,9 +19,8 @@ export default {
         rollupOptions: {
             input: {
                 index: 'src/index.html',
-            //    'index-058b17f4.js': fileURLToPath(new URL('src/index.html', import.meta.url)),
-                hauntedHouse: 'src/Experience/haunted-house.html',
-                css: 'src/style.css',
+                // hauntedHouse: 'src/Experience/haunted-house.html',
+                css: 'src/Experience/style.css',
             }
        },
     }
